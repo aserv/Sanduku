@@ -27,9 +27,10 @@ public class PlayerController : MonoBehaviour, IDamageable {
         input.OnJump += JumpPressed;
         input.OnCommandEnter += CommandPressed;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         input.Update();
         //QueryCommands();
         //float vert = Input.GetAxis("Vertical1");
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour, IDamageable {
         //    ++jumpCount;
         //    jump = true;
         //}
+        Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+        GetComponent<Animator>().SetFloat("yVelocity", velocity.y);
+        GetComponent<Animator>().SetBool("isRunning", Mathf.Abs(velocity.x) > 0.2f);
     }
 
     //Called once per physics frame
@@ -47,8 +51,9 @@ public class PlayerController : MonoBehaviour, IDamageable {
             Physics2D.Raycast((Vector2)transform.position + new Vector2(-raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
         Vector2 v = this.GetComponent<Rigidbody2D>().velocity;
         v.x = Mathf.MoveTowards(v.x, RunSpeed * input.HorizontalVal, RunAccel * Time.fixedDeltaTime);
-        if (v.x > 0 ^ transform.localScale.z < 0)
+        if (v.x > 0 ^ transform.localScale.x > 0)
             Flip();
+
         //float v = Input.GetAxis("Vertical1");
 
         //if (jump)
@@ -78,7 +83,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     private void Flip()
     {
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
     private void CommandPressed(Button b)
