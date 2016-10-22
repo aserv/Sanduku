@@ -5,7 +5,7 @@ using System.Collections;
 /// This is the player controller class
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IDamageable {
     public int PlayerID;
     public float RunSpeed;
     public float RunAccel;
@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour {
     private int jumpCount;
     private CommandManager manager;
     private Command command;
-    private bool jump;
-    private float lastVert;
     private InputManager input;
 
 	// Use this for initialization
@@ -29,9 +27,10 @@ public class PlayerController : MonoBehaviour {
         input.OnJump += JumpPressed;
         input.OnCommandEnter += CommandPressed;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         input.Update();
         //QueryCommands();
         //float vert = Input.GetAxis("Vertical1");
@@ -40,6 +39,9 @@ public class PlayerController : MonoBehaviour {
         //    ++jumpCount;
         //    jump = true;
         //}
+        Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+        GetComponent<Animator>().SetFloat("yVelocity", velocity.y);
+        GetComponent<Animator>().SetBool("isRunning", Mathf.Abs(velocity.x) > 0.2f);
     }
 
     //Called once per physics frame
@@ -49,8 +51,9 @@ public class PlayerController : MonoBehaviour {
             Physics2D.Raycast((Vector2)transform.position + new Vector2(-raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
         Vector2 v = this.GetComponent<Rigidbody2D>().velocity;
         v.x = Mathf.MoveTowards(v.x, RunSpeed * input.HorizontalVal, RunAccel * Time.fixedDeltaTime);
-        if (v.x > 0 ^ transform.localScale.z < 0)
+        if (v.x > 0 ^ transform.localScale.x > 0)
             Flip();
+
         //float v = Input.GetAxis("Vertical1");
 
         //if (jump)
@@ -64,6 +67,11 @@ public class PlayerController : MonoBehaviour {
         this.GetComponent<Rigidbody2D>().velocity = v;
     }
 
+    public void Damage()
+    {
+        Destroy(gameObject);
+    }
+
     private void JumpPressed()
     {
         if (jumpCount < MaxJumps)
@@ -75,7 +83,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Flip()
     {
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, -transform.localScale.z);
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
     private void CommandPressed(Button b)
@@ -86,7 +94,6 @@ public class PlayerController : MonoBehaviour {
             command = Command.Empty;
         }
     }
-
 
     private void QueryCommands()
     {

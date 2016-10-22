@@ -1,0 +1,88 @@
+fileFormatVersion: 2
+guid: 3dabb80bb97124956896be915ec648d3
+timeCreated: 1477162162
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: trapDoor_Sanduku_0
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 538, y: 509, z: 404, w: 588}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: trapDoor_Sanduku_0
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 512
+        width: 655
+        height: 96
+      alignment: 9
+      pivot: {x: 0.06313113, y: 0.5317097}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 611.6491, y: -36.04413}
+        - {x: 613.6491, y: -33.04413}
+        - {x: 613.6491, y: 34.95587}
+        - {x: 607.6491, y: 38.95587}
+        - {x: 597.6491, y: 36.95587}
+        - {x: 56.64911, y: 36.95587}
+        - {x: 50.64911, y: 41.95587}
+        - {x: 28.649109, y: 44.95587}
+        - {x: -14.350891, y: 44.95587}
+        - {x: -26.350891, y: 36.95587}
+        - {x: -37.35089, y: 30.955872}
+        - {x: -41.35089, y: 13.955872}
+        - {x: -41.35089, y: -24.044128}
+        - {x: -36.35089, y: -32.04413}
+        - {x: -14.350891, y: -51.04413}
+        - {x: 28.649109, y: -51.04413}
+        - {x: 53.64911, y: -36.04413}
+        - {x: 109.64911, y: -36.04413}
+        - {x: 185.64911, y: -35.04413}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

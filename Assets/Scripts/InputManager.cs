@@ -9,7 +9,7 @@ public class InputManager {
     private string yellowName = "Yellow";
     private string greenName = "Green";
     private string blueName = "Blue";
-    private float tapTheshold = 0.8f;
+    private float tapTheshold = 0.9f;
     private float lastVert;
     private float horizontal;
     public InputManager(int playerId) {
