@@ -1,0 +1,104 @@
+fileFormatVersion: 2
+guid: cc383b88e4f6e460182504c564e98e89
+timeCreated: 1477162558
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: cornerCannon_Sanduku_0
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: cornerCannon_Sanduku_0
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 512
+        width: 253
+        height: 458
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7392774}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 98.5, y: -225.58905}
+        - {x: 96.5, y: -215.58905}
+        - {x: 99.5, y: -164.58905}
+        - {x: 96.5, y: -124.58905}
+        - {x: 101.5, y: -92.58905}
+        - {x: 119.5, y: -65.58905}
+        - {x: 126.5, y: -36.58905}
+        - {x: 126.5, y: 23.41095}
+        - {x: 118.5, y: 53.41095}
+        - {x: 98.5, y: 82.41095}
+        - {x: 61.5, y: 107.41095}
+        - {x: 43.5, y: 115.41095}
+        - {x: 27.5, y: 119.41095}
+        - {x: -29.5, y: 119.41095}
+        - {x: -46.5, y: 114.41095}
+        - {x: -78.5, y: 96.41095}
+        - {x: -102.5, y: 71.41095}
+        - {x: -113.5, y: 52.41095}
+        - {x: -125.5, y: 21.41095}
+        - {x: -126.5, y: 13.41095}
+        - {x: -126.5, y: -18.58905}
+        - {x: -123.5, y: -46.58905}
+        - {x: -120.5, y: -51.58905}
+        - {x: -117.5, y: -57.58905}
+        - {x: -92.5, y: -108.58905}
+        - {x: -78.5, y: -143.58905}
+        - {x: -76.5, y: -211.58905}
+        - {x: -79.5, y: -241.58905}
+        - {x: -85.5, y: -304.58905}
+        - {x: -81.5, y: -329.58905}
+        - {x: -72.5, y: -338.58905}
+        - {x: -24.5, y: -338.58905}
+        - {x: 60.5, y: -329.58905}
+        - {x: 81.5, y: -321.58905}
+        - {x: 92.5, y: -312.58905}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

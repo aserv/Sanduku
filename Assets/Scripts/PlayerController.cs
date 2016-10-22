@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
     {
         if (command.AddButton(b))
         {
-            Debug.Log(command);
             manager.SendComand(command, this);
             command = Command.Empty;
         }

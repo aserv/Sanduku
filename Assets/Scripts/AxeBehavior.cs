@@ -5,7 +5,7 @@ public class AxeBehavior : MonoBehaviour, ICommandListener {
     public float Angle;
     public float FallDuration;
     public float RiseDuration;
-    public Command command;
+    public Command Command;
 
     private float duration;
     private Quaternion startAngle;
@@ -17,7 +17,7 @@ public class AxeBehavior : MonoBehaviour, ICommandListener {
     {
         startAngle = transform.rotation;
         endAngle = transform.rotation * Quaternion.AngleAxis(Angle, Vector3.forward);
-        GameObject.Find("CommandManager").GetComponent<CommandManager>().RegisterCommand(command, this);
+        GameObject.Find("CommandManager").GetComponent<CommandManager>().RegisterCommand(Command, this);
     }
 
     // Update is called once per frame

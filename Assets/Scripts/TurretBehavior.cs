@@ -5,6 +5,7 @@ public class TurretBehavior : MonoBehaviour, ICommandListener {
     public float Duration;
     public float Angle;
     public GameObject Bullet;
+	public Command Command;
 
     private float duration;
     private Quaternion startAngle;
@@ -14,6 +15,7 @@ public class TurretBehavior : MonoBehaviour, ICommandListener {
 	void Start () {
         startAngle = transform.rotation;
         endAngle = transform.rotation * Quaternion.AngleAxis(Angle, Vector3.forward);
+		GameObject.Find("CommandManager").GetComponent<CommandManager>().RegisterCommand(Command, this);
 	}
 	
 	// Update is called once per frame
