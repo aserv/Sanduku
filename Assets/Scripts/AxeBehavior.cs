@@ -47,7 +47,7 @@ public class AxeBehavior : MonoBehaviour, ICommandListener {
 
     }
 
-    public void ActOnCommand(Command c, PlayerControler player)
+    public void ActOnCommand(Command c, PlayerController player)
     {
         if (state == 0)
         {

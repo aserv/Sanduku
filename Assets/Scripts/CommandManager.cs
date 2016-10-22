@@ -9,7 +9,7 @@ public class CommandManager : MonoBehaviour {
         listeners = new ICommandListener[64];
 	}
 
-    public void SendComand(Command command, PlayerControler player)
+    public void SendComand(Command command, PlayerController player)
     {
         ICommandListener l = listeners[command.Value & 0x3f];
         if (l != null)
@@ -29,8 +29,8 @@ public class CommandManager : MonoBehaviour {
 }
 
 class CommandDispatcher : ICommandListener {
-    List<ICommandListener> listeners;
-    public void ActOnCommand(Command command, PlayerControler player)
+    List<ICommandListener> listeners = new List<ICommandListener>();
+    public void ActOnCommand(Command command, PlayerController player)
     {
         foreach (ICommandListener l in listeners)
             l.ActOnCommand(command, player);

@@ -9,8 +9,10 @@ public class InputManager {
     private string yellowName = "Yellow";
     private string greenName = "Green";
     private string blueName = "Blue";
-    private float tapTheshold;
-    public InputManager(int playerId, float tapTheshold = 0.8f) {
+    private float tapTheshold = 0.8f;
+    private float lastVert;
+    private float horizontal;
+    public InputManager(int playerId) {
         horizontalName += playerId;
         verticalName += playerId;
         redName += playerId;
@@ -19,15 +21,27 @@ public class InputManager {
         blueName += playerId;
     }
 
-    public float HorizontalVal { get { return Input.GetAxis(horizontalName); } }
-    public float VerticalVal { get { return Input.GetAxis(verticalName); } }
+    public void Update()
+    {
+        horizontal = Input.GetAxis(horizontalName);
+        if (Input.GetButtonDown(redName))
+            OnCommandEnter(Button.R);
+        if (Input.GetButtonDown(yellowName))
+            OnCommandEnter(Button.Y);
+        if (Input.GetButtonDown(greenName))
+            OnCommandEnter(Button.G);
+        if (Input.GetButtonDown(blueName))
+            OnCommandEnter(Button.B);
+        if (lastVert < tapTheshold & ((lastVert = Input.GetAxis(verticalName)) >= tapTheshold))
+            OnJump();
+    }
 
-    public bool RedDown { get { return Input.GetButtonDown(redName); } }
-    public bool RedUp { get { return Input.GetButtonUp(redName); } }
-    public bool YellowDown { get { return Input.GetButtonDown(yellowName); } }
-    public bool YellowUp { get { return Input.GetButtonUp(yellowName); } }
-    public bool GreenDown { get { return Input.GetButtonDown(greenName); } }
-    public bool GreenUp { get { return Input.GetButtonUp(greenName); } }
-    public bool BlueDown { get { return Input.GetButtonDown(blueName); } }
-    public bool BlueUp { get { return Input.GetButtonUp(blueName); } }
+    public delegate void CommandEventHandler(Button b);
+    public event CommandEventHandler OnCommandEnter;
+
+    public delegate void TapEventHandler();
+    public event TapEventHandler OnJump;
+
+    public float HorizontalVal { get { return horizontal; } }
+
 }

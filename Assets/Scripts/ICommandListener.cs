@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public interface ICommandListener {
-    void ActOnCommand(Command c, PlayerControler player);
+    void ActOnCommand(Command c, PlayerController player);
 }
 
 [Serializable]
@@ -50,6 +50,29 @@ public struct Command
         }
         Value += 0x40;
         return false;
+    }
+
+    public override bool Equals(object other)
+    {
+        if (other is Command)
+        {
+            Command c = (Command)other;
+            return this == c;
+        }
+        return false;
+    }
+    public static bool operator==(Command c1, Command c2)
+    {
+        return ((c1.Value ^ c2.Value) & 0x3f) != 0;
+    }
+    public static bool operator !=(Command c1, Command c2)
+    {
+        return ((c1.Value ^ c2.Value) & 0x3f) == 0;
+    }
+    //Stop yelling at me VS
+    public override int GetHashCode()
+    {
+        return Value;
     }
     public static Command Empty = new Command { Value = 0 };
 }

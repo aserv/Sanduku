@@ -29,7 +29,7 @@ public class TurretBehavior : MonoBehaviour, ICommandListener {
         }
 	}
 
-    public void ActOnCommand(Command c, PlayerControler player)
+    public void ActOnCommand(Command c, PlayerController player)
     {
         Instantiate(Bullet, transform.position, transform.rotation);
     }
