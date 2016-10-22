@@ -15,10 +15,12 @@ public class PlayerControler : MonoBehaviour {
     private float raycastWidth = 0.5f;
     private bool isGrounded;
     private int jumpCount;
+    private CommandManager manager;
+    private Command command;
 
 	// Use this for initialization
 	void Start () {
-	
+        manager = GameObject.Find("CommandManager").GetComponent<CommandManager>();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +36,28 @@ public class PlayerControler : MonoBehaviour {
             ++jumpCount;
             v.y = JumpSpeed;
         }
+
+        if (Input.GetButtonDown("Red1") && command.AddButton(Button.R))
+        {
+            manager.SendComand(command, this);
+            command = Command.Empty;
+        }
+        if (Input.GetButtonDown("Yellow1") && command.AddButton(Button.Y))
+        {
+            manager.SendComand(command, this);
+            command = Command.Empty;
+        }
+        if (Input.GetButtonDown("Green1") && command.AddButton(Button.G))
+        {
+            manager.SendComand(command, this);
+            command = Command.Empty;
+        }
+        if (Input.GetButtonDown("Blue1") && command.AddButton(Button.B))
+        {
+            manager.SendComand(command, this);
+            command = Command.Empty;
+        }
+
 
         this.GetComponent<Rigidbody2D>().velocity = v;
 	}

@@ -1,21 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AxeBehavior : MonoBehaviour {
+public class AxeBehavior : MonoBehaviour, ICommandListener {
     public float Angle;
     public float FallDuration;
     public float RiseDuration;
+    public Command command;
 
     private float duration;
     private Quaternion startAngle;
     private Quaternion endAngle;
-    private int state = 1;
+    private int state = 0;
 
     // Use this for initialization
     void Start()
     {
         startAngle = transform.rotation;
         endAngle = transform.rotation * Quaternion.AngleAxis(Angle, Vector3.forward);
+        GameObject.Find("CommandManager").GetComponent<CommandManager>().RegisterCommand(command, this);
     }
 
     // Update is called once per frame
@@ -43,5 +45,13 @@ public class AxeBehavior : MonoBehaviour {
                 break;
         }
 
+    }
+
+    public void ActOnCommand(Command c, PlayerControler player)
+    {
+        if (state == 0)
+        {
+            state = 1;
+        }
     }
 }

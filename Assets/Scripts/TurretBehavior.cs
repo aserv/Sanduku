@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TurretBehavior : MonoBehaviour {
+public class TurretBehavior : MonoBehaviour, ICommandListener {
     public float Duration;
     public float Angle;
+    public GameObject Bullet;
 
     private float duration;
     private Quaternion startAngle;
@@ -27,4 +28,9 @@ public class TurretBehavior : MonoBehaviour {
             duration = 0;
         }
 	}
+
+    public void ActOnCommand(Command c, PlayerControler player)
+    {
+        Instantiate(Bullet, transform.position, transform.rotation);
+    }
 }
