@@ -22,7 +22,7 @@ public struct Command
     }
     public Button Button3
     {
-        get { return (Button)((Value & 0x03) >> 4); }
+        get { return (Button)((Value & 0x30) >> 4); }
         set { Value = (Byte)((Value & 0xcf) | ((Byte)value << 4)); }
     }
     public uint Buttons
@@ -63,16 +63,29 @@ public struct Command
     }
     public static bool operator==(Command c1, Command c2)
     {
-        return ((c1.Value ^ c2.Value) & 0x3f) != 0;
+        return ((c1.Value ^ c2.Value) & 0x3f) == 0;
     }
     public static bool operator !=(Command c1, Command c2)
     {
-        return ((c1.Value ^ c2.Value) & 0x3f) == 0;
+        return ((c1.Value ^ c2.Value) & 0x3f) != 0;
     }
     //Stop yelling at me VS
     public override int GetHashCode()
     {
         return Value;
+    }
+    public override string ToString()
+    {
+        switch(Buttons)
+        {
+            case 1:
+                return String.Format("{0}__", Button1);
+            case 2:
+                return String.Format("{0}{1}_", Button1, Button2);
+            case 3:
+                return String.Format("{0}{1}{2}", Button1, Button2, Button3);
+        }
+        return "___";
     }
     public static Command Empty = new Command { Value = 0 };
 }
@@ -83,4 +96,9 @@ public enum Button : byte
     Y = 1,
     G = 2,
     B = 3
+}
+
+public interface IDamageable
+{
+    void Damage();
 }

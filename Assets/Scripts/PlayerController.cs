@@ -5,7 +5,7 @@ using System.Collections;
 /// This is the player controller class
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IDamageable {
     public int PlayerID;
     public float RunSpeed;
     public float RunAccel;
@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour {
     private int jumpCount;
     private CommandManager manager;
     private Command command;
-    private bool jump;
-    private float lastVert;
     private InputManager input;
 
 	// Use this for initialization
@@ -64,6 +62,11 @@ public class PlayerController : MonoBehaviour {
         this.GetComponent<Rigidbody2D>().velocity = v;
     }
 
+    public void Damage()
+    {
+        Destroy(gameObject);
+    }
+
     private void JumpPressed()
     {
         if (jumpCount < MaxJumps)
@@ -82,11 +85,11 @@ public class PlayerController : MonoBehaviour {
     {
         if (command.AddButton(b))
         {
+            Debug.Log(command);
             manager.SendComand(command, this);
             command = Command.Empty;
         }
     }
-
 
     private void QueryCommands()
     {

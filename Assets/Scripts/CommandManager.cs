@@ -3,11 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CommandManager : MonoBehaviour {
-    private ICommandListener[] listeners;
-	// Use this for initialization
-	void Start () {
-        listeners = new ICommandListener[64];
-	}
+    private ICommandListener[] listeners = new ICommandListener[64];
 
     public void SendComand(Command command, PlayerController player)
     {

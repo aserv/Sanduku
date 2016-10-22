@@ -27,7 +27,7 @@ public class SawBehavior : MonoBehaviour, ICommandListener {
         transform.Rotate(Vector3.forward, RotationalSpeed * Time.deltaTime);
         if (Physics2D.Raycast(transform.position, velocity, radius, 1))
             velocity *= -1;
-        transform.Translate(velocity * Time.deltaTime);
+        transform.position += (Vector3)(velocity * Time.deltaTime);
     }
 
     public void ActOnCommand(Command command, PlayerController player)
