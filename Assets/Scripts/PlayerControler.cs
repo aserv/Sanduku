@@ -4,6 +4,7 @@ using System.Collections;
 /// <summary>
 /// This is the player controller class
 /// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControler : MonoBehaviour {
     public float RunSpeed;
     public float RunAccel;
