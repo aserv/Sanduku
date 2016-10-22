@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 /// <summary>
@@ -7,10 +8,19 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour, IDamageable {
     public int PlayerID;
-    public float RunSpeed;
-    public float RunAccel;
-    public float JumpSpeed;
+    //public float RunSpeed;
+    //public float RunAccel;
+    //public float JumpSpeed;
     public int MaxJumps;
+    public int SpeedLevel;
+    public int JumpLevel;
+
+    public static float JumpSpeed;
+    public static float RunSpeed;
+    private static float RunAccel;
+    public static int SJumpLevel;
+    public static int SSpeedLevel;
+    public static int STotal;
 
     private float raycastLength = 1.1f;
     private float raycastWidth = 0.5f;
@@ -22,15 +32,25 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
 	// Use this for initialization
 	void Start () {
+        SJumpLevel += JumpLevel;
+        SSpeedLevel += SpeedLevel;
+        STotal += 2;
         manager = GameObject.Find("CommandManager").GetComponent<CommandManager>();
         input = new InputManager(PlayerID);
         input.OnJump += JumpPressed;
         input.OnCommandEnter += CommandPressed;
+        manager.Effects.Update();
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
+    void OnDestroy() {
+        SJumpLevel -= JumpLevel;
+        SSpeedLevel -= SpeedLevel;
+        STotal -= 2;
+        manager.Effects.Update();
+    }
+	
+	// Update is called once per frame
+	void Update () {
         input.Update();
         //QueryCommands();
         //float vert = Input.GetAxis("Vertical1");
@@ -90,6 +110,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     {
         if (command.AddButton(b))
         {
+            Debug.Log(command);
             manager.SendComand(command, this);
             command = Command.Empty;
         }
@@ -116,6 +137,67 @@ public class PlayerController : MonoBehaviour, IDamageable {
         {
             manager.SendComand(command, this);
             command = Command.Empty;
+        }
+    }
+
+    [Serializable]
+    public class PlayerEffectListener : ICommandListener
+    {
+        public Command SpeedUp;
+        public Command SpeedDown;
+        public Command JumpUp;
+        public Command JumpDown;
+        public float SpeedLow;
+        public float SpeedHigh;
+        public float JumpLow;
+        public float JumpHigh;
+        public float AccelLow;
+        public float AccelHigh;
+
+        public void ActOnCommand(Command command, PlayerController player)
+        {
+            if (command == SpeedUp)
+            {
+                if (player.SpeedLevel != 2)
+                {
+                    player.SpeedLevel++;
+                    SSpeedLevel++;
+                }
+            }
+            else if (command == SpeedDown)
+            {
+                if (player.SpeedLevel != 0)
+                {
+                    player.SpeedLevel--;
+                    SSpeedLevel--;
+                }
+            }
+            else if (command == JumpDown)
+            {
+                if (player.JumpLevel != 0)
+                {
+                    player.JumpLevel--;
+                    SJumpLevel--;
+                }
+            }
+            else if (command == JumpUp)
+            {
+                if (player.JumpLevel != 2)
+                {
+                    player.JumpLevel++;
+                    SJumpLevel++;
+                }
+            }
+            Update();
+        }
+
+        public void Update()
+        {
+            if (STotal == 0)
+                return;
+            RunSpeed = Mathf.Lerp(SpeedLow, SpeedHigh, (float)SSpeedLevel / STotal);
+            RunAccel = Mathf.Lerp(AccelLow, AccelHigh, (float)SSpeedLevel / STotal);
+            JumpSpeed = Mathf.Lerp(JumpLow, JumpHigh, (float)SJumpLevel / STotal);
         }
     }
 }

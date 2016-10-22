@@ -3,7 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CommandManager : MonoBehaviour {
+    public PlayerController.PlayerEffectListener Effects;
     private ICommandListener[] listeners = new ICommandListener[64];
+
+    void Start()
+    {
+        RegisterCommand(Effects.SpeedUp, Effects);
+        RegisterCommand(Effects.SpeedDown, Effects);
+        RegisterCommand(Effects.JumpUp, Effects);
+        RegisterCommand(Effects.JumpDown, Effects);
+    }
 
     public void SendComand(Command command, PlayerController player)
     {
