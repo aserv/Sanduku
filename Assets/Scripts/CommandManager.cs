@@ -29,7 +29,7 @@ public class CommandManager : MonoBehaviour {
         else if (l is CommandDispatcher)
             ((CommandDispatcher)l).AddListener(listener);
         else
-            listeners[command.Value & 0x3f] = new CommandDispatcher().AddListener(listeners[command.Value & 0x3f]);
+            listeners[command.Value & 0x3f] = (new CommandDispatcher()).AddListener(l).AddListener(listener);
     }
 }
 
