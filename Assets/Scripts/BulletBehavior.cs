@@ -7,13 +7,14 @@ public class BulletBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GetComponent<Rigidbody2D>().velocity = Speed * (transform.rotation * Vector3.down);
+        Destroy(gameObject, 5);
 	}
 
-    void OnCollisionEnter2D(Collision2D collider)
+    void OnTriggerEnter2D(Collider2D collider)
     {
+        Debug.Log("Bullet colliding");
         IDamageable other = collider.gameObject.GetComponent<IDamageable>();
         if (other != null)
             other.Damage();
-        Destroy(gameObject);
     }
 }
