@@ -2731,6 +2731,12 @@ MonoBehaviour:
   MaxJumps: 2
   SpeedLevel: 1
   JumpLevel: 1
+  Head: {fileID: 1000012993679640, guid: e546032ed3ee34b0592437aa80ec352f, type: 2}
+  Arm1: {fileID: 1000013287094710, guid: f0724880e0ddc4b5db6e39e85692919c, type: 2}
+  Arm2: {fileID: 1000013963268012, guid: 2aff3fadcd3e94011a29a4f8d94d451e, type: 2}
+  Leg1: {fileID: 1000011219964040, guid: 71181ed206c514237963ea144d03466b, type: 2}
+  Leg2: {fileID: 1000010018849002, guid: 7a1cd850d19334678ad663ec852afef3, type: 2}
+  Body: {fileID: 1000013245372016, guid: 76eb62174e4a1405ab8644576b83e14a, type: 2}
 --- !u!50 &1638875141
 Rigidbody2D:
   serializedVersion: 2
