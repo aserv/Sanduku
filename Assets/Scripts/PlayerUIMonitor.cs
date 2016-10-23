@@ -7,15 +7,12 @@ public class PlayerUIMonitor : MonoBehaviour {
     public Sprite Yellow;
     public Sprite Green;
     public Sprite Blue;
-    private Image button1;
-    private Image button2;
-    private Image button3;
-	// Use this for initialization
-	void Start () {
-        button1 = transform.Find("Button1").GetComponent<Image>();
-        button2 = transform.Find("Button2").GetComponent<Image>();
-        button3 = transform.Find("Button3").GetComponent<Image>();
-    }
+    private Image m_button1;
+    private Image m_button2;
+    private Image m_button3;
+    private Image button1 { get { return m_button1 ?? (m_button1 = transform.Find("Button1").GetComponent<Image>()); } }
+    private Image button2 { get { return m_button2 ?? (m_button2 = transform.Find("Button2").GetComponent<Image>()); } }
+    private Image button3 { get { return m_button3 ?? (m_button3 = transform.Find("Button3").GetComponent<Image>()); } }
 	
 	public void SetCommand(Command command)
     {
