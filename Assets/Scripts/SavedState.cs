@@ -101,7 +101,7 @@ public class SavedState : MonoBehaviour {
         {
             foreach (PlayerController p in controllers)
             {
-                if (p != null)
+                if (p != null && p.Input != null)
                 {
                     switch (p.PlayerID)
                     {
