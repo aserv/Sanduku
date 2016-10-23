@@ -15,7 +15,7 @@ public class SawBehavior : MonoBehaviour, ICommandListener {
 	// Use this for initialization
 	void Start () {
         CommandManager manager = GameObject.Find("CommandManager").GetComponent<CommandManager>();
-        radius = GetComponent<CircleCollider2D>().radius;
+        radius = GetComponent<CircleCollider2D>().radius * transform.lossyScale.x;
         manager.RegisterCommand(UpCommand, this);
         manager.RegisterCommand(DownCommand, this);
         manager.RegisterCommand(LeftCommand, this);
@@ -41,5 +41,12 @@ public class SawBehavior : MonoBehaviour, ICommandListener {
         } else if (command == RightCommand) {
             velocity = Vector2.right * MoveSpeed;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        IDamageable other = collider.gameObject.GetComponent<IDamageable>();
+        if (other != null)
+            other.Damage();
     }
 }

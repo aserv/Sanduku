@@ -33,6 +33,6 @@ public class TurretBehavior : MonoBehaviour, ICommandListener {
 
     public void ActOnCommand(Command c, PlayerController player)
     {
-        Instantiate(Bullet, transform.position, transform.rotation);
+        Instantiate(Bullet, GetComponentInChildren<Transform>().position, transform.rotation);
     }
 }

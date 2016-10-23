@@ -54,4 +54,11 @@ public class AxeBehavior : MonoBehaviour, ICommandListener {
             state = 1;
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        IDamageable other = collider.gameObject.GetComponent<IDamageable>();
+        if (other != null)
+            other.Damage();
+    }
 }

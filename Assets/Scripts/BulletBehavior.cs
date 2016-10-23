@@ -6,7 +6,7 @@ public class BulletBehavior : MonoBehaviour {
     public float Speed;
 	// Use this for initialization
 	void Start () {
-        GetComponent<Rigidbody2D>().velocity = transform.rotation * Vector3.right;
+        GetComponent<Rigidbody2D>().velocity = Speed * (transform.rotation * Vector3.down);
 	}
 
     void OnCollisionEnter2D(Collision2D collider)
