@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.UI;
 using System.Collections;
 
 /// <summary>
@@ -8,6 +9,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageable {
+    private static bool paused;
     public int PlayerID;
     //public float RunSpeed;
     //public float RunAccel;
@@ -36,6 +38,32 @@ public class PlayerController : MonoBehaviour, IDamageable {
     private CommandManager manager;
     private Command command;
     private InputManager input;
+    public InputManager Input
+    {
+        get
+        {
+            return input;
+        }
+        set
+        {
+            if (input != null)
+            {
+                input.OnJump -= JumpPressed;
+                input.OnCommandEnter -= CommandPressed;
+                input.OnStart -= PauseGame;
+                input.Player = null;
+            }
+            input = value;
+            if (input != null)
+            {
+                input.OnJump += JumpPressed;
+                input.OnCommandEnter += CommandPressed;
+                input.OnStart += PauseGame;
+                input.Player = this;
+            }
+            gameObject.SetActive(input != null);
+        }
+    }
     private float baseMove;
     private Animator anim;
     private PlayerUIMonitor monitor;
@@ -47,12 +75,11 @@ public class PlayerController : MonoBehaviour, IDamageable {
         SSpeedLevel += SpeedLevel;
         STotal += 2;
         manager = GameObject.Find("CommandManager").GetComponent<CommandManager>();
-        input = new InputManager(PlayerID);
-        input.OnJump += JumpPressed;
-        input.OnCommandEnter += CommandPressed;
+        GameObject.Find("SavedState").GetComponent<SavedState>().InitPlayerControler(this);
         manager.Effects.Update();
         monitor = GameObject.Find("Player" + PlayerID + "UI").GetComponent<PlayerUIMonitor>();
         monitor.SetCommand(command);
+        Input = null;
 	}
 
     void OnDestroy() {
@@ -60,11 +87,31 @@ public class PlayerController : MonoBehaviour, IDamageable {
         SSpeedLevel -= SpeedLevel;
         STotal -= 2;
         manager.Effects.Update();
+        Input = null;
+    }
+
+    private void PauseGame(object o)
+    {
+        paused = !paused;
+        GameObject pauseMenu = GameObject.FindGameObjectWithTag("pauseScreen");
+        if (paused)
+        {
+            Time.timeScale = 0;
+            pauseMenu.GetComponentInChildren<Text>().color = Color.black;
+            pauseMenu.GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0.45f);
+        }
+        else if (!paused)
+        {
+            Time.timeScale = 1;
+            pauseMenu.GetComponentInChildren<Text>().color = Color.clear;
+            pauseMenu.GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0);
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        input.Update();
+        if (input != null)
+            input.Update();
         //QueryCommands();
         //float vert = Input.GetAxis("Vertical1");
         //if (((lastVert < 0.7f) & ((lastVert = vert) > 0.7f)) && jumpCount < MaxJumps && !jump)
@@ -95,7 +142,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
         Vector2 v = this.GetComponent<Rigidbody2D>().velocity;
         if ((lastBaseMove > 0) ^ (baseMove > 0))
             v.x = baseMove;
-        v.x = Mathf.MoveTowards(v.x, baseMove + RunSpeed * input.HorizontalVal, RunAccel * Time.fixedDeltaTime);
+        v.x = Mathf.MoveTowards(v.x, baseMove + RunSpeed * (input != null ? input.HorizontalVal : 0), RunAccel * Time.fixedDeltaTime);
         if (v.x > 0 ^ transform.localScale.x > 0)
             Flip();
 
