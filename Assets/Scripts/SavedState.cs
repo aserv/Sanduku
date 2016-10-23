@@ -43,6 +43,7 @@ public class SavedState : MonoBehaviour {
         if (!init)
         {
             playerSpawned = 0;
+            playersAlive = 0;
             for (int c = 0; c < 4; c++)
             {
                 if (managers[c].PlayerId != 0)

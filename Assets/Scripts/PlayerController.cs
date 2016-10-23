@@ -173,7 +173,6 @@ public class PlayerController : MonoBehaviour, IDamageable {
         v.x = baseMove;
         platformlessXVelocity = Mathf.MoveTowards(platformlessXVelocity, RunSpeed * (input != null ? input.HorizontalVal : 0), RunAccel * Time.fixedDeltaTime);
         v.x += platformlessXVelocity;
-        Debug.Log(platformlessXVelocity);
         if (v.x > 0 ^ transform.localScale.x > 0)
             Flip();
 
