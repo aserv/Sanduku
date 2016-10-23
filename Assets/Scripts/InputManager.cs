@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 //Not using this right now, maybe later
 public class InputManager {
+    private static bool paused;
+
     private string horizontalName = "Horizontal";
     private string verticalName = "Vertical";
     private string redName = "Red";
     private string yellowName = "Yellow";
     private string greenName = "Green";
     private string blueName = "Blue";
+    private string startName = "Start";
     private float tapTheshold = 0.9f;
     private float lastVert;
     private float horizontal;
@@ -19,6 +23,8 @@ public class InputManager {
         yellowName += playerId;
         greenName += playerId;
         blueName += playerId;
+        startName += playerId;
+        paused = false;
     }
 
     public void Update()
@@ -34,6 +40,23 @@ public class InputManager {
             OnCommandEnter(Button.B);
         if (lastVert < tapTheshold & ((lastVert = Input.GetAxis(verticalName)) >= tapTheshold))
             OnJump();
+        if (Input.GetButtonDown(startName))
+        {
+            paused = !paused;
+            GameObject pauseMenu = GameObject.FindGameObjectWithTag("pauseScreen");
+            if (paused)
+            {
+                Time.timeScale = 0;
+                pauseMenu.GetComponentInChildren<Text>().color = Color.black;
+                pauseMenu.GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0.45f);
+            }
+            else if (!paused)
+            {
+                Time.timeScale = 1;
+                pauseMenu.GetComponentInChildren<Text>().color = Color.clear;
+                pauseMenu.GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0);
+            }
+        }
     }
 
     public delegate void CommandEventHandler(Button b);
