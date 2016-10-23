@@ -23,7 +23,7 @@ GameObject:
   - 212: {fileID: 212000012988298152}
   - 50: {fileID: 50000014186780480}
   - 114: {fileID: 114000011606881790}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Arm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
