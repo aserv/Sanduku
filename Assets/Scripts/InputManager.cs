@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 //Not using this right now, maybe later
 public class InputManager {
+    public static bool Waiting;
     private string horizontalName = "Horizontal";
     private string verticalName = "Vertical";
     private string redName = "Red";
@@ -14,9 +15,11 @@ public class InputManager {
     private float tapTheshold = 0.9f;
     private float lastVert;
     private float horizontal;
-    private int controllerID;
+    public int controllerID;
     [HideInInspector]
     public PlayerController Player;
+    [HideInInspector]
+    public int PlayerId;
     public InputManager(int controllerID) {
         horizontalName += controllerID;
         verticalName += controllerID;
@@ -30,20 +33,24 @@ public class InputManager {
 
     public void Update()
     {
-        horizontal = Input.GetAxis(horizontalName);
-        if (Input.GetButtonDown(redName) && OnCommandEnter != null)
-            OnCommandEnter(Button.R);
-        if (Input.GetButtonDown(yellowName) && OnCommandEnter != null)
-            OnCommandEnter(Button.Y);
-        if (Input.GetButtonDown(greenName) && OnCommandEnter != null)
-            OnCommandEnter(Button.G);
-        if (Input.GetButtonDown(blueName) && OnCommandEnter != null)
-            OnCommandEnter(Button.B);
-        if ((lastVert < tapTheshold & ((lastVert = Input.GetAxis(verticalName)) >= tapTheshold)) && OnJump != null) //Single & is intentional
-            OnJump();
+        if (!Waiting)
+        {
+            horizontal = Input.GetAxis(horizontalName);
+            if (Input.GetButtonDown(redName) && OnCommandEnter != null)
+                OnCommandEnter(Button.R);
+            if (Input.GetButtonDown(yellowName) && OnCommandEnter != null)
+                OnCommandEnter(Button.Y);
+            if (Input.GetButtonDown(greenName) && OnCommandEnter != null)
+                OnCommandEnter(Button.G);
+            if (Input.GetButtonDown(blueName) && OnCommandEnter != null)
+                OnCommandEnter(Button.B);
+            if ((lastVert < tapTheshold & ((lastVert = Input.GetAxis(verticalName)) >= tapTheshold)) && OnJump != null) //Single & is intentional
+                OnJump();
+        }
         if (Input.GetButtonDown(startName) && OnStart != null)
         {
-            OnStart(this);
+            if (!Waiting || Player == null)
+                OnStart(this);
         }
             
     }

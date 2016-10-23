@@ -86,8 +86,13 @@ public class PlayerController : MonoBehaviour, IDamageable {
         SJumpLevel -= JumpLevel;
         SSpeedLevel -= SpeedLevel;
         STotal -= 2;
-        manager.Effects.Update();
+        if ((bool)manager)
+            manager.Effects.Update();
         Input = null;
+        try
+        {
+            GameObject.Find("SavedState").GetComponent<SavedState>().DeinitPlayerControler(this);
+        } catch (Exception) { }
     }
 
     private void PauseGame(object o)
