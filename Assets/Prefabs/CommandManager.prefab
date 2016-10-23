@@ -60,9 +60,9 @@ MonoBehaviour:
       Value: 16
     JumpDown:
       Value: 32
-    SpeedLow: 2
-    SpeedHigh: 5
-    JumpLow: 4
-    JumpHigh: 10
-    AccelLow: 4
-    AccelHigh: 10
+    SpeedLow: 3
+    SpeedHigh: 22
+    JumpLow: 7
+    JumpHigh: 17.5
+    AccelLow: 30
+    AccelHigh: 60
