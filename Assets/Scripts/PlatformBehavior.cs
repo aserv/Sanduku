@@ -29,8 +29,8 @@ public class PlatformBehavior : MonoBehaviour, ICommandListener {
             }
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, newRotation));
         }
-        Vector3 movementVector = new Vector3(-horizontalSpeed*Time.deltaTime, 0, 0);
-        if(movingRight)
+        Vector3 movementVector = new Vector3(horizontalSpeed*Time.deltaTime, 0, 0);
+        if(!movingRight)
         {
             movementVector *= -1;
         }
