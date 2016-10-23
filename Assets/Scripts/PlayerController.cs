@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     public static int SSpeedLevel;
     public static int STotal;
 
+    private float platformlessXVelocity;
     private float raycastLength = 1.1f;
     private float raycastWidth = 0.5f;
     private bool isGrounded;
@@ -64,12 +65,26 @@ public class PlayerController : MonoBehaviour, IDamageable {
             gameObject.SetActive(input != null);
         }
     }
-    private float baseMove;
     private Animator anim;
     private PlayerUIMonitor monitor;
 
 	// Use this for initialization
 	void Start () {
+        switch (PlayerID)
+        {
+            case 1:
+                GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+                break;
+            case 2:
+                GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+                break;
+            case 3:
+                GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
+                break;
+            case 4:
+                GetComponent<SpriteRenderer>().color = new Color(255, 255, 0);
+                break;
+        }
         anim = GetComponent<Animator>();
         SJumpLevel += JumpLevel;
         SSpeedLevel += SpeedLevel;
@@ -80,6 +95,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
         monitor = GameObject.Find("Player" + PlayerID + "UI").GetComponent<PlayerUIMonitor>();
         monitor.SetCommand(command);
         Input = null;
+        platformlessXVelocity = 0;
 	}
 
     void OnDestroy() {
@@ -121,15 +137,15 @@ public class PlayerController : MonoBehaviour, IDamageable {
         //}
         Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
         anim.SetFloat("yVelocity", velocity.y);
-        anim.SetBool("isRunning", Mathf.Abs(velocity.x - baseMove) > 0.2f);
+        anim.SetBool("isRunning", Mathf.Abs(platformlessXVelocity) > 0.2f);
     }
 
     //Called once per physics frame
     void FixedUpdate()
     {
-        float lastBaseMove = baseMove;
         RaycastHit2D hit1 = Physics2D.Raycast((Vector2)transform.position + new Vector2(raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
         RaycastHit2D hit2 = Physics2D.Raycast((Vector2)transform.position + new Vector2(-raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
+        float baseMove = 0;
         if (isGrounded = (hit1 || hit2))
         {
             PlatformBehavior pform = hit1.collider ? hit1.collider.GetComponent<PlatformBehavior>() : hit2.collider.GetComponent<PlatformBehavior>();
@@ -140,9 +156,10 @@ public class PlayerController : MonoBehaviour, IDamageable {
         }
         anim.SetBool("IsGrounded", isGrounded);
         Vector2 v = this.GetComponent<Rigidbody2D>().velocity;
-        if ((lastBaseMove > 0) ^ (baseMove > 0))
-            v.x = baseMove;
-        v.x = Mathf.MoveTowards(v.x, baseMove + RunSpeed * (input != null ? input.HorizontalVal : 0), RunAccel * Time.fixedDeltaTime);
+        v.x = baseMove;
+        platformlessXVelocity = Mathf.MoveTowards(platformlessXVelocity, RunSpeed * (input != null ? input.HorizontalVal : 0), RunAccel * Time.fixedDeltaTime);
+        v.x += platformlessXVelocity;
+        Debug.Log(platformlessXVelocity);
         if (v.x > 0 ^ transform.localScale.x > 0)
             Flip();
 
@@ -161,21 +178,29 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     public void Damage()
     {
-        Instantiate(Head, transform.position, transform.rotation);
-        Instantiate(Arm1, transform.position, transform.rotation);
-        Instantiate(Arm2, transform.position, transform.rotation);
-        Instantiate(Leg1, transform.position, transform.rotation);
-        Instantiate(Body, transform.position, transform.rotation);
+        GameObject part=(GameObject)Instantiate(Head, transform.position, transform.rotation);
+        part.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
+        part = (GameObject)Instantiate(Arm1, transform.position, transform.rotation);
+        part.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
+        part = (GameObject)Instantiate(Arm2, transform.position, transform.rotation);
+        part.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
+        part = (GameObject)Instantiate(Leg1, transform.position, transform.rotation);
+        part.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
+        part = (GameObject)Instantiate(Body, transform.position, transform.rotation);
+        part.GetComponent<SpriteRenderer>().color = GetComponent<SpriteRenderer>().color;
 
         Destroy(gameObject);
     }
 
     private void JumpPressed()
     {
-        if (jumpCount < MaxJumps)
+        if (jumpCount < MaxJumps - 1)
         {
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(this.GetComponent<Rigidbody2D>().velocity.x, JumpSpeed);
-            jumpCount++;
+            if (!isGrounded)
+            {
+                jumpCount++;
+            }
         }
     }
 
