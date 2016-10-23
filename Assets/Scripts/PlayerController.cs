@@ -15,6 +15,12 @@ public class PlayerController : MonoBehaviour, IDamageable {
     public int MaxJumps;
     public int SpeedLevel;
     public int JumpLevel;
+    public GameObject Head; //Lloyd's Additions
+    public GameObject Arm1;
+    public GameObject Arm2;
+    public GameObject Leg1;
+    public GameObject Leg2;
+    public GameObject Body;
 
     public static float JumpSpeed;
     public static float RunSpeed;
@@ -108,6 +114,12 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     public void Damage()
     {
+        Instantiate(Head, transform.position, transform.rotation);
+        Instantiate(Arm1, transform.position, transform.rotation);
+        Instantiate(Arm2, transform.position, transform.rotation);
+        Instantiate(Leg1, transform.position, transform.rotation);
+        Instantiate(Body, transform.position, transform.rotation);
+
         Destroy(gameObject);
     }
 
