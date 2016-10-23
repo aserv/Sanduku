@@ -1022,6 +1022,11 @@ Prefab:
       propertyPath: Angle
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 114000011491038316, guid: 9b53da7c3ec22e4458452a0c77d26859,
+        type: 2}
+      propertyPath: Command.Value
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9b53da7c3ec22e4458452a0c77d26859, type: 2}
   m_IsPrefabParent: 0
