@@ -6,7 +6,6 @@ using System.Collections;
 /// This is the player controller class
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDamageable {
     public int PlayerID;
     //public float RunSpeed;
@@ -30,12 +29,15 @@ public class PlayerController : MonoBehaviour, IDamageable {
     private CommandManager manager;
     private Command command;
     private InputManager input;
-    private float baseMove;
-    private Animator anim;
+	public GameObject Head; //Lloyd's Additions
+	public GameObject Arm1;
+	public GameObject Arm2;
+	public GameObject Leg1;
+	public GameObject Leg2;
+	public GameObject Body;
 
 	// Use this for initialization
 	void Start () {
-        anim = GetComponent<Animator>();
         SJumpLevel += JumpLevel;
         SSpeedLevel += SpeedLevel;
         STotal += 2;
@@ -64,29 +66,17 @@ public class PlayerController : MonoBehaviour, IDamageable {
         //    jump = true;
         //}
         Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
-        anim.SetFloat("yVelocity", velocity.y);
-        anim.SetBool("isRunning", Mathf.Abs(velocity.x - baseMove) > 0.2f);
+        GetComponent<Animator>().SetFloat("yVelocity", velocity.y);
+        GetComponent<Animator>().SetBool("isRunning", Mathf.Abs(velocity.x) > 0.2f);
     }
 
     //Called once per physics frame
     void FixedUpdate()
     {
-        float lastBaseMove = baseMove;
-        RaycastHit2D hit1 = Physics2D.Raycast((Vector2)transform.position + new Vector2(raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
-        RaycastHit2D hit2 = Physics2D.Raycast((Vector2)transform.position + new Vector2(-raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
-        if (isGrounded = (hit1 || hit2))
-        {
-            PlatformBehavior pform = hit1.collider ? hit1.collider.GetComponent<PlatformBehavior>() : hit2.collider.GetComponent<PlatformBehavior>();
-            if (pform)
-                baseMove = pform.horizontalSpeed * (pform.movingRight ? 1 : -1);
-            else
-                baseMove = 0;
-        }
-        anim.SetBool("IsGrounded", isGrounded);
+        isGrounded = Physics2D.Raycast((Vector2)transform.position + new Vector2(raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8)) ||
+            Physics2D.Raycast((Vector2)transform.position + new Vector2(-raycastWidth, 0), Vector2.down, raycastLength, -1 ^ (1 << 8));
         Vector2 v = this.GetComponent<Rigidbody2D>().velocity;
-        if ((lastBaseMove > 0) ^ (baseMove > 0))
-            v.x = baseMove;
-        v.x = Mathf.MoveTowards(v.x, baseMove + RunSpeed * input.HorizontalVal, RunAccel * Time.fixedDeltaTime);
+        v.x = Mathf.MoveTowards(v.x, RunSpeed * input.HorizontalVal, RunAccel * Time.fixedDeltaTime);
         if (v.x > 0 ^ transform.localScale.x > 0)
             Flip();
 
@@ -105,6 +95,12 @@ public class PlayerController : MonoBehaviour, IDamageable {
 
     public void Damage()
     {
+		Instantiate (Head, transform.position, transform.rotation);
+		Instantiate (Arm1, transform.position, transform.rotation);
+		Instantiate (Arm2, transform.position, transform.rotation);
+		Instantiate (Leg1, transform.position, transform.rotation);
+		Instantiate (Body, transform.position, transform.rotation);
+		
         Destroy(gameObject);
     }
 
