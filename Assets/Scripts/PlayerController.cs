@@ -80,6 +80,9 @@ public class PlayerController : MonoBehaviour, IDamageable {
         monitor = GameObject.Find("Player" + PlayerID + "UI").GetComponent<PlayerUIMonitor>();
         monitor.SetCommand(command);
         Input = null;
+		GameObject pauseMenu = GameObject.FindGameObjectWithTag("pauseScreen");
+		pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().gameObject.GetComponent<Image>().color=new Color(0,0,0,0);
+		pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color=new Color(0,0,0,0);
 	}
 
     void OnDestroy() {
@@ -99,12 +102,18 @@ public class PlayerController : MonoBehaviour, IDamageable {
             Time.timeScale = 0;
             pauseMenu.GetComponentInChildren<Text>().color = Color.black;
             pauseMenu.GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0.45f);
+			pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().enabled = true;
+			pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().gameObject.GetComponent<Image>().color=new Color(1,1,1,1);
+			pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color=new Color(0,0,0,1);
         }
         else if (!paused)
         {
             Time.timeScale = 1;
             pauseMenu.GetComponentInChildren<Text>().color = Color.clear;
             pauseMenu.GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0);
+			pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().enabled = false;
+			pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().gameObject.GetComponent<Image>().color=new Color(0,0,0,0);
+			pauseMenu.GetComponentInChildren<UnityEngine.UI.Button>().gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color=new Color(0,0,0,0);
         }
     }
 	
