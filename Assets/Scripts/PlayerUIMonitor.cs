@@ -13,7 +13,7 @@ public class PlayerUIMonitor : MonoBehaviour {
     private Image button1 { get { return m_button1 ?? (m_button1 = transform.Find("Button1").GetComponent<Image>()); } }
     private Image button2 { get { return m_button2 ?? (m_button2 = transform.Find("Button2").GetComponent<Image>()); } }
     private Image button3 { get { return m_button3 ?? (m_button3 = transform.Find("Button3").GetComponent<Image>()); } }
-	
+
 	public void SetCommand(Command command)
     {
         button1.enabled = false;

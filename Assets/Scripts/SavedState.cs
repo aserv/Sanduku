@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SavedState : MonoBehaviour {
     private float created;
@@ -13,12 +15,28 @@ public class SavedState : MonoBehaviour {
         new InputManager(4)
     };
     private bool init;
-    [SerializeField]
     private int playerSpawned;
-    [SerializeField]
     private int playersAlive;
-	// Use this for initialization
-	void Start () {
+
+    private static int player1Wins;
+    private static  int player2Wins;
+    private static int player3Wins;
+    private static int player4Wins;
+    public Text Player1Wins;
+    public Text Player2Wins;
+    public Text Player3Wins;
+    public Text Player4Wins;
+
+    // Use this for initialization
+    void Start () {
+        try
+        {
+            Player1Wins.text = player1Wins.ToString();
+            Player2Wins.text = player2Wins.ToString();
+            Player3Wins.text = player3Wins.ToString();
+            Player4Wins.text = player4Wins.ToString();
+        } catch (Exception) { }
+        
         created = Time.time;
         SavedState[] saved = GameObject.FindObjectsOfType<SavedState>();
         foreach (SavedState s in saved)
@@ -81,6 +99,28 @@ public class SavedState : MonoBehaviour {
         }
         if (playersAlive == 1)
         {
+            foreach (PlayerController p in controllers)
+            {
+                if (p != null)
+                {
+                    switch (p.PlayerID)
+                    {
+                        case 1:
+                            player1Wins++;
+                            break;
+                        case 2:
+                            player2Wins++;
+                            break;
+                        case 3:
+                            player3Wins++;
+                            break;
+                        case 4:
+                            player4Wins++;
+                            break;
+
+                    }
+                }
+            }
             Input.ResetInputAxes();
             init = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
