@@ -1393,6 +1393,7 @@ GameObject:
   - 114: {fileID: 1638875140}
   - 95: {fileID: 1638875144}
   - 212: {fileID: 1638875143}
+  - 58: {fileID: 1638875146}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -1443,9 +1444,9 @@ BoxCollider2D:
   m_Material: {fileID: 6200000, guid: 0658a5bac4714744fb1bff5a77d3be98, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.15013337}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5}
+  m_Size: {x: 1, y: 1.1997333}
 --- !u!212 &1638875143
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1509,6 +1510,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
+--- !u!58 &1638875146
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1638875139}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: -0.4}
+  serializedVersion: 2
+  m_Radius: 0.5034056
 --- !u!1 &1663493256
 GameObject:
   m_ObjectHideFlags: 0
