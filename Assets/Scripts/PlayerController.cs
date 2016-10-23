@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
     private InputManager input;
     private float baseMove;
     private Animator anim;
+    private PlayerUIMonitor monitor;
 
 	// Use this for initialization
 	void Start () {
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour, IDamageable {
         input.OnJump += JumpPressed;
         input.OnCommandEnter += CommandPressed;
         manager.Effects.Update();
+        monitor = GameObject.Find("Player" + PlayerID + "UI").GetComponent<PlayerUIMonitor>();
+        monitor.SetCommand(command);
 	}
 
     void OnDestroy() {
@@ -130,30 +133,7 @@ public class PlayerController : MonoBehaviour, IDamageable {
             manager.SendComand(command, this);
             command = Command.Empty;
         }
-    }
-
-    private void QueryCommands()
-    {
-        if (Input.GetButtonDown("Red1") && command.AddButton(Button.R))
-        {
-            manager.SendComand(command, this);
-            command = Command.Empty;
-        }
-        if (Input.GetButtonDown("Yellow1") && command.AddButton(Button.Y))
-        {
-            manager.SendComand(command, this);
-            command = Command.Empty;
-        }
-        if (Input.GetButtonDown("Green1") && command.AddButton(Button.G))
-        {
-            manager.SendComand(command, this);
-            command = Command.Empty;
-        }
-        if (Input.GetButtonDown("Blue1") && command.AddButton(Button.B))
-        {
-            manager.SendComand(command, this);
-            command = Command.Empty;
-        }
+        monitor.SetCommand(command);
     }
 
     [Serializable]

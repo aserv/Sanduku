@@ -25,7 +25,7 @@ public class SawBehavior : MonoBehaviour, ICommandListener {
     void Update()
     {
         transform.Rotate(Vector3.forward, RotationalSpeed * Time.deltaTime);
-        if (Physics2D.Raycast(transform.position, velocity, radius, 1) || Physics2D.Raycast(transform.position, velocity, radius, 13))
+        if (Physics2D.Raycast(transform.position, velocity, radius, 1 | (1 << 12)))
             velocity *= -1;
         transform.position += (Vector3)(velocity * Time.deltaTime);
     }
